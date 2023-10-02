@@ -31,7 +31,7 @@ export default class SynapseBgLayer {
     this.globalAlpha = fadeIn ? 0 : 1; // set initial value opposite our eventual target value
 
     // resolves promise if fade is complete or recurses after a delay if not
-    const fadeFunction = (callback: (value?: any) => void ) => {
+    const fadeFunction = (callback: (value?: boolean) => void ) => {
       if (fadeIn ? this.globalAlpha >= 1 : this.globalAlpha <= 0) return callback();
 
       this.renderAll();

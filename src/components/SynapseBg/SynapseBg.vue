@@ -1,13 +1,19 @@
 <template>
   <div
+    ref="sbg_root"
     class="sbg-root"
     :class="{ viewport: props.viewport === true }"
-    ref="sbg_root"
   >
-    <h2>Gang Shit Only</h2>
-
-    <canvas class="sbg-canvas sbg-canvas__network" :class="{ viewport: props.viewport === true }" ref="cnv_network"></canvas>
-    <canvas class="sbg-canvas sbg-canvas__signal" :class="{ viewport: props.viewport === true }" ref="cnv_signal"></canvas>
+    <canvas
+      ref="cnv_network"
+      class="sbg-canvas sbg-canvas__network"
+      :class="{ viewport: props.viewport === true }"
+    />
+    <canvas
+      ref="cnv_signal"
+      class="sbg-canvas sbg-canvas__signal"
+      :class="{ viewport: props.viewport === true }"
+    />
   </div>
 </template>
 
@@ -16,8 +22,14 @@ import SynapseBg from './SynapseBg';
 import { ref, onMounted } from 'vue';
 
 const props = defineProps({
-  color: String,
-  tracerScale: Number,
+  color: {
+    type: String,
+    default: 'black'
+  },
+  tracerScale: {
+    type: Number,
+    default: 1
+  },
   viewport: Boolean,
 });
 
