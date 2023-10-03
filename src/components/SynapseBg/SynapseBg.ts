@@ -14,30 +14,32 @@ import {
   parse as parseColor
 } from "colorjs.io/fn";
 
+// user color is parsed into this; ultimately interpolated into rgb(r g b / a) for rendering
 type ColorCoords = [number, number, number];
 
 type SynapseBgOptions = {
-  color?: string;
+  color?: string;       
   networkSize?: number;
   speedScale?: number;
-  tracerScale?: number;
-  viewport?: boolean;
+  tracerScale?: number; 
+  viewport?: boolean;   // if present, parent container dimensions are ignored and canvases fill viewport
 }
 
 export default class SynapseBg {
-  rootContainer: HTMLDivElement;
-  networkLayer: SynapseBgLayer;
-  signalLayer: SynapseBgLayer;
-  intervalId: number;
-  networkSize: number;
-  speedScale: number;
-  tracerScale: number;
-  colorCoords: ColorCoords;
+  rootContainer: HTMLDivElement; // element wrapping the two canvases (layers)
+  networkLayer: SynapseBgLayer;  // Layer onto which network is drawn
+  signalLayer: SynapseBgLayer;   // Layer onto which Signals and Tracers are drawn
+  intervalId: number;            // used to start and stop animation loops
+  networkSize: number;           // number of interconnected nodes generated per network
+  speedScale: number;            // multiplies base speed of Signals
+  tracerScale: number;           // width of each Tracer in coordinate space units
+  colorCoords: ColorCoords;      // base color before changes to opacity are taken into account
   options: SynapseBgOptions;
   static allowedColorSpaces = [sRGB, HSL, HWB, Lab, LCH, OKLab, OKLCH];
   static cycleInterval = 20; // in ms
   static defaultNetworkSize = 5; // number of Nodes in network
 
+  // userColor can be any CSS Color 4 keyword or <color> string in the allowed ColorSpaces
   static getColor(userColor: string): ColorCoords {
     try {
       const reg = ColorSpace.registry;

@@ -1,9 +1,11 @@
 import SynapseBgEntity from "./SynapseBgEntity";
 
+type ColorCoords = [number, number, number];
+
 export default class SynapseBgNode extends SynapseBgEntity {
   terminal: SynapseBgNode | null;
 
-  constructor(terminal: SynapseBgNode | null, color: [number, number, number]) {
+  constructor(terminal: SynapseBgNode | null, color: ColorCoords) {
     const randomPos = { x: Math.random(), y: Math.random() };
     super(randomPos, color);
     this.terminal = terminal;
