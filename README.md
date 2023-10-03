@@ -1,46 +1,64 @@
-# synapse-bg-vue
+# vue-synapse-bg: Vue Component
 
-This template should help get you started developing with Vue 3 in Vite.
+A performant and configurable background element that generates a network of connected nodes over which subtle, dynamic signal traversal is simulated.
 
-## Recommended IDE Setup
+Framework-agnostic Web Component version: https://github.com/mhowen/synapse-bg-wc
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Installation
 
-## Type Support for `.vue` Imports in TS
+### From npm
+Run `npm install vue-synapse-bg` in your project directory
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+### Install as Vue Plugin
+Import the module *and the CSS rules*:
+```js
+// main.js
+import SynapseBg from 'vue-synapse-bg';
+import 'vue-synapse-bg/dist/style.css';
+```
+Then install SynapseBg as a plugin:
+```js
+// main.js
+const app = createApp({});
+app.use(SynapseBg);
 ```
 
-### Compile and Hot-Reload for Development
+## Usage
 
-```sh
-npm run dev
+### Fill Container
+Include `<SynapseBg />` anywhere within a template and it will dynamically change size to match its parent container
+
+### Fill Viewport
+Include `<SynapseBg />` anywhere within a template and include the `viewport` boolean attribute
+
+### Example
+```html
+<SynapseBg
+  color="hotpink"
+  :network-size="10"
+  :speed-scale="2"
+  :tracer-scale="5"
+  viewport
+/>
 ```
 
-### Type-Check, Compile and Minify for Production
+## Configuration
 
-```sh
-npm run build
-```
+### Attributes
+`color`: Defines base color of rendered entities
+- Can be any valid CSS <color> keyword or string in any common colorspace, e.g. `'darkslateblue'`, `'#483d8b'`, `'rgb(72 61 139)'`
+- If omitted or invalid, defaults to black
 
-### Lint with [ESLint](https://eslint.org/)
+`network-size`: Defines number of nodes generated for each network
+- Must be an integer greater than or equal to 2
+- If omitted or invalid, defaults to 5 for a relatively subtle effect
 
-```sh
-npm run lint
-```
+`speed-scale`: Multiplies base traversal speed of network Signals
+- Base speed is one percent of one coordinate space unit per render cycle
+- Must be a number greater than 0
+- If omitted or invalid, defaults to 1
+
+`tracer-scale`: Multiplies width at which Tracers are drawn along Signal path
+- Base width is one coordinate space unit
+- Must be a number greater than 0
+- If omitted or invalid, defaults to 1
