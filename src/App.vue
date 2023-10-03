@@ -3,18 +3,25 @@ import SynapseBg from './components/SynapseBg/SynapseBg.vue'
 </script>
 
 <template>
-  <div>  
-    <main>
-      <SynapseBg
-        color="hotpink"
-        :tracer-scale="5"
-        viewport
-      />
-    </main>
+  <div class="testDiv">
+    <SynapseBg
+      color="hotpink"
+      :network-size="10"
+      :speed-scale="2"
+      :tracer-scale="5"
+      viewport
+    />
   </div>
 </template>
 
 <style scoped>
+.testDiv {
+  min-width: 600px;
+  aspect-ratio: 1;
+
+  outline: 5px solid rgb(106 90 205 / .5);
+}
+
 header {
   line-height: 1.5;
 }

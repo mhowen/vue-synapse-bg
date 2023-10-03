@@ -19,6 +19,7 @@ type ColorCoords = [number, number, number];
 type SynapseBgOptions = {
   color?: string;
   networkSize?: number;
+  speedScale?: number;
   tracerScale?: number;
   viewport?: boolean;
 }
@@ -29,13 +30,13 @@ export default class SynapseBg {
   signalLayer: SynapseBgLayer;
   intervalId: number;
   networkSize: number;
+  speedScale: number;
   tracerScale: number;
   colorCoords: ColorCoords;
   options: SynapseBgOptions;
   static allowedColorSpaces = [sRGB, HSL, HWB, Lab, LCH, OKLab, OKLCH];
   static cycleInterval = 20; // in ms
   static defaultNetworkSize = 5; // number of Nodes in network
-  static defaultTracerScale = 1; // in coordinate space units
 
   static getColor(userColor: string): ColorCoords {
     try {
@@ -65,7 +66,8 @@ export default class SynapseBg {
     this.intervalId = -1;
     this.options = options;
     this.networkSize = options.networkSize || SynapseBg.defaultNetworkSize;
-    this.tracerScale = options.tracerScale || SynapseBg.defaultTracerScale;
+    this.speedScale = options.speedScale || 1;
+    this.tracerScale = options.tracerScale || 1;
     this.colorCoords = options.color ? SynapseBg.getColor(options.color) : [0, 0, 0];
 
     const parentObserver = new ResizeObserver(entries => entries.forEach(() => this.resize()));
@@ -95,7 +97,7 @@ export default class SynapseBg {
     const sig = new SynapseBgSignal(
       this.networkLayer.entities,
       this.colorCoords,
-      1,
+      this.speedScale,
       this.tracerScale
     );
     this.signalLayer.addEntity(sig);

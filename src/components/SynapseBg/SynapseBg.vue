@@ -2,17 +2,15 @@
   <div
     ref="sbg_root"
     class="sbg-root"
-    :class="{ viewport: props.viewport === true }"
+    :class="{ 'sbg-root__viewport': props.viewport }"
   >
     <canvas
       ref="cnv_network"
-      class="sbg-canvas sbg-canvas__network"
-      :class="{ viewport: props.viewport === true }"
+      class="sbg-canvas"
     />
     <canvas
       ref="cnv_signal"
-      class="sbg-canvas sbg-canvas__signal"
-      :class="{ viewport: props.viewport === true }"
+      class="sbg-canvas"
     />
   </div>
 </template>
@@ -25,6 +23,14 @@ const props = defineProps({
   color: {
     type: String,
     default: 'black'
+  },
+  networkSize: {
+    type: Number,
+    default: 5
+  },
+  speedScale: {
+    type: Number,
+    default: 1
   },
   tracerScale: {
     type: Number,
@@ -39,11 +45,12 @@ const cnv_signal = ref<HTMLCanvasElement | null>(null);
 
 onMounted(() => {
   // get refs to elements that will need to be directly manipulated in the DOM
-  const root = sbg_root.value;
-  const rootParent = root?.parentElement;
-  const networkLayer = cnv_network.value;
-  const signalLayer = cnv_signal.value;
-  if (!rootParent || !networkLayer || !signalLayer) throw Error;
+  const root = sbg_root.value; // container wrapping the two canvases
+  const rootParent = root?.parentElement; // container wrapping root div, if such a thing exists
+  const networkLayer = cnv_network.value; // the layer onto which static elements are rendered once
+  const signalLayer = cnv_signal.value; // the layer onto which animated elements are rendered each cycle
+  
+  if (!rootParent || !networkLayer || !signalLayer) throw new Error;
 
   new SynapseBg(root, networkLayer, signalLayer, props);
 });
@@ -52,14 +59,13 @@ onMounted(() => {
 <style scoped>
 .sbg-root,
 .sbg-canvas {
+  overflow: hidden;
   position: absolute;
-  inset: 0;
 }
-.sbg-root.viewport {
+.sbg-root__viewport,
+.sbg-root__viewport > .sbg-canvas {
   position: fixed;
+  inset: 0;
   z-index: -999;
-}
-.sbg-canvas {
-  z-index: inherit;
 }
 </style>
