@@ -35,30 +35,32 @@ Include `<SynapseBg />` anywhere within a template and include the `viewport` bo
 ```html
 <SynapseBg
   color="hotpink"
-  :network-size="10"
-  :speed-scale="2"
-  :tracer-scale="5"
+  network-size="10"
+  speed-scale="2"
+  tracer-scale="5"
   viewport
 />
 ```
 
 ## Configuration
 
-### Attributes
+### Attribute Guide
 `color`: Defines base color of rendered entities
 - Can be any valid CSS <color> keyword or string in any common colorspace, e.g. `'darkslateblue'`, `'#483d8b'`, `'rgb(72 61 139)'`
 - If omitted or invalid, defaults to black
 
 `network-size`: Defines number of nodes generated for each network
-- Must be an integer greater than or equal to 2
+- Must be or parse to an integer greater than or equal to 2
 - If omitted or invalid, defaults to 5 for a relatively subtle effect
 
 `speed-scale`: Multiplies base traversal speed of network Signals
 - Base speed is one percent of one coordinate space unit per render cycle
-- Must be a number greater than 0
+- Must be or parse to a number greater than 0
 - If omitted or invalid, defaults to 1
 
 `tracer-scale`: Multiplies width at which Tracers are drawn along Signal path
 - Base width is one coordinate space unit
-- Must be a number greater than 0
+- Must be or parse to a number greater than 0
 - If omitted or invalid, defaults to 1
+
+`viewport`: If present, SynapseBg ignores its parent's dimensions and fills the active viewport

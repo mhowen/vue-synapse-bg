@@ -19,21 +19,22 @@
 import SynapseBg from './SynapseBg';
 import { ref, onMounted } from 'vue';
 
+// some number-type props allow strings for the sake of ergonomic templating; those are cast to numbers on mount
 const props = defineProps({
   color: {
     type: String,
     default: 'black'
   },
   networkSize: {
-    type: Number,
+    type: [String, Number],
     default: 5
   },
   speedScale: {
-    type: Number,
+    type: [String, Number],
     default: 1
   },
   tracerScale: {
-    type: Number,
+    type: [String, Number],
     default: 1
   },
   viewport: Boolean,
@@ -52,7 +53,18 @@ onMounted(() => {
   
   if (!rootParent || !networkLayer || !signalLayer) throw new Error;
 
-  new SynapseBg(root, networkLayer, signalLayer, props);
+  // if user passed a string, convert it to number. if user passed number, send it right through
+  const checkInt = (val: string | number) => typeof val === 'string' ? parseInt(val) : val;
+
+  const options = {
+    color: props.color,
+    networkSize: checkInt(props.networkSize),
+    speedScale: checkInt(props.speedScale),
+    tracerScale: checkInt(props.tracerScale),
+    viewport: props.viewport
+  }
+
+  new SynapseBg(root, networkLayer, signalLayer, options);
 });
 </script>
 
