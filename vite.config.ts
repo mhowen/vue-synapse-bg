@@ -7,7 +7,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.js'),
       name: 'SynapseBg',
-      fileName: (format) => `vue3-synapse-bg.${format}.js`,
+      fileName: (format) => `vue-synapse-bg.${format}.js`,
     },
     rollupOptions: {
       external: ['vue'],

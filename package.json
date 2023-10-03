@@ -1,15 +1,16 @@
 {
-  "name": "vue3-synapse-bg",
+  "name": "vue-synapse-bg",
   "version": "0.0.0",
   "private": true,
   "files": ["dist"],
-  "main": "./dist/vue3-synapse-bg.umd.js",
-  "module": "./dist/vue3-synapse-bg.es.js",
+  "main": "./dist/vue-synapse-bg.umd.js",
+  "module": "./dist/vue-synapse-bg.es.js",
   "exports": {
     ".": {
-      "import": "./dist/vue3-synapse-bg.es.js",
-      "require": "./dist/vue3-synapse-bg.umd.js"
-    }
+      "import": "./dist/vue-synapse-bg.es.js",
+      "require": "./dist/vue-synapse-bg.umd.js"
+    },
+    "./dist/style.css": "./dist/style.css"
   },
   "scripts": {
     "dev": "vite",
