@@ -1,7 +1,10 @@
 {
   "name": "vue-synapse-bg",
   "version": "0.0.0",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mhowen/vue-synapse-bg.git"
+  },
   "files": ["dist"],
   "main": "./dist/vue-synapse-bg.umd.js",
   "module": "./dist/vue-synapse-bg.es.js",
